@@ -1,25 +1,401 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday ❤️</title>
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Short+Stack&amp;family=Homemade+Apple&amp;display=swap'>
-  <link rel="stylesheet" href="style2.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rishabh@jakhar:~$</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<base target="_blank">
 </head>
 <body>
+    <!-- CRT Overlay -->
+    <div class="crt-overlay">
+        <div class="scanlines"></div>
+        <div class="flicker"></div>
+    </div>
 
-<!-- Developed by Rishabh <3 -->
-<audio id="song" style="visibility: hidden;" controls loop autoplay> 
-  <source src= 
-"test.ogg"
-  type="audio/ogg"> 
-</audio> 
-<div class="paper heart">
-</div>
-<div class="paper">
-<p class="p1">You got rickrolled! Nothing to see here (except maybe a heart)</p>
-</div>
-<!-- javascript file -->
-  <script  src="script.js"></script>
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="terminal-container">
+
+        <!-- Header / Boot Sequence -->
+        <header class="terminal-header">
+            <div class="boot-sequence" id="boot-sequence">
+                <div class="boot-line"><span class="timestamp">[00:00:00]</span> <span class="success">OK</span> Initializing kernel...</div>
+                <div class="boot-line"><span class="timestamp">[00:00:01]</span> <span class="success">OK</span> Loading modules: python, cpp, java, js, html, css</div>
+                <div class="boot-line"><span class="timestamp">[00:00:02]</span> <span class="success">OK</span> Mounting filesystems...</div>
+                <div class="boot-line"><span class="timestamp">[00:00:03]</span> <span class="success">OK</span> Starting user session: rishabh</div>
+            </div>
+
+            <div class="ascii-art" id="ascii-art">
+██████╗ ██╗███████╗██╗  ██╗ █████╗ ██████╗ ██╗  ██╗
+██╔══██╗██║██╔════╝██║  ██║██╔══██╗██╔══██╗██║  ██║
+██████╔╝██║███████╗███████║███████║██████╔╝███████║
+██╔══██╗██║╚════██║██╔══██║██╔══██║██╔══██╗██╔══██║
+██║  ██║██║███████║██║  ██║██║  ██║██████╔╝██║  ██║
+╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝
+            </div>
+
+            <div class="header-info">
+                <div class="prompt-line">
+                    <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~</span><span class="dollar">$</span> 
+                    <span class="typewriter" id="typewriter"></span><span class="cursor">█</span>
+                </div>
+                <div class="subtitle glitch" data-text="Studying and doing some useless projects rn.">
+                    Studying and doing some useless projects rn.
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Bar -->
+        <nav class="terminal-nav">
+            <div class="nav-prompt">
+                <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~/portfolio</span><span class="dollar">$</span> ls -la
+            </div>
+            <div class="nav-items">
+                <a href="#about" class="nav-item" data-cmd="cat about.txt">about.txt</a>
+                <a href="#projects" class="nav-item" data-cmd="cd projects/">projects/</a>
+                <a href="#skills" class="nav-item" data-cmd="cat skills.json">skills.json</a>
+                <a href="#contact" class="nav-item" data-cmd="cat contact.md">contact.md</a>
+            </div>
+        </nav>
+
+        <!-- About Section -->
+        <section id="about" class="terminal-section">
+            <div class="section-header">
+                <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~/portfolio</span><span class="dollar">$</span> cat about.txt
+            </div>
+            <div class="section-content about-content">
+                <div class="about-card">
+                    <div class="about-avatar">
+                        <div class="avatar-frame">
+                            <span class="avatar-text">RJ</span>
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p><span class="highlight">Name:</span> Rishabh Jakhar</p>
+                        <p><span class="highlight">Role:</span> Developer & Student</p>
+                        <p><span class="highlight">Status:</span> <span class="pulse">●</span> Online — building useless (but cool) stuff</p>
+                        <p><span class="highlight">Repos:</span> 46 public repositories</p>
+                        <p><span class="highlight">Philosophy:</span> Code fast. Break things. Fix them at 3 AM.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="terminal-section">
+            <div class="section-header">
+                <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~/portfolio</span><span class="dollar">$</span> cat skills.json
+            </div>
+            <div class="section-content">
+                <pre class="json-display">
+{
+  "languages": ["Python", "C", "C++", "Java", "JavaScript", "HTML", "CSS"],
+  "frameworks": ["React.js", "Django", "Discord.py"],
+  "domains": ["Web Dev", "Machine Learning", "NLP", "Network Science", "Game Dev"],
+  "tools": ["Git", "Linux", "Jupyter", "VS Code"],
+  "level": "intermediate",
+  "learning": true
+}</pre>
+                <div class="skill-bars">
+                    <div class="skill-bar">
+                        <span class="skill-name">Python</span>
+                        <div class="skill-track"><div class="skill-fill" style="width: 90%"></div></div>
+                        <span class="skill-pct">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">JavaScript</span>
+                        <div class="skill-track"><div class="skill-fill" style="width: 85%"></div></div>
+                        <span class="skill-pct">85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">C / C++</span>
+                        <div class="skill-track"><div class="skill-fill" style="width: 80%"></div></div>
+                        <span class="skill-pct">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Java</span>
+                        <div class="skill-track"><div class="skill-fill" style="width: 75%"></div></div>
+                        <span class="skill-pct">75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">HTML / CSS</span>
+                        <div class="skill-track"><div class="skill-fill" style="width: 88%"></div></div>
+                        <span class="skill-pct">88%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="terminal-section">
+            <div class="section-header">
+                <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~/portfolio</span><span class="dollar">$</span> tree projects/
+            </div>
+            <div class="section-content">
+                <div class="file-tree">
+
+                    <!-- Web Apps Folder -->
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">web-apps/</span>
+                            <span class="folder-meta">4 items</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <div class="folder-content">
+
+                            <div class="file-item hosted" onclick="openProject('valostat')">
+                                <span class="file-icon">⚡</span>
+                                <span class="file-name">ValoStat</span>
+                                <span class="file-ext">.exe</span>
+                                <span class="file-desc">// Display Valorant stats of friends</span>
+                                <span class="file-badge live">LIVE</span>
+                            </div>
+
+                            <div class="file-item hosted" onclick="openProject('leetstat')">
+                                <span class="file-icon">⚡</span>
+                                <span class="file-name">LeetStat</span>
+                                <span class="file-ext">.exe</span>
+                                <span class="file-desc">// Display LeetCode stats of friends</span>
+                                <span class="file-badge live">LIVE</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('tradewind')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">TradeWind</span>
+                                <span class="file-ext">.jsx</span>
+                                <span class="file-desc">// Trading simulation platform (React + Django)</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('bakershut')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">BakersHut</span>
+                                <span class="file-ext">.ts</span>
+                                <span class="file-desc">// Bakery website</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ML / AI Folder -->
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">ml-ai/</span>
+                            <span class="folder-meta">3 items</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <div class="folder-content">
+
+                            <div class="file-item" onclick="openProject('fraudlens')">
+                                <span class="file-icon">🛡️</span>
+                                <span class="file-name">FraudLens</span>
+                                <span class="file-ext">.py</span>
+                                <span class="file-desc">// Predict scam websites ★4</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('cse556')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">CSE556-NLP</span>
+                                <span class="file-ext">.ipynb</span>
+                                <span class="file-desc">// NLP assignments & project</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('cse343')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">CSE343-ML</span>
+                                <span class="file-ext">.ipynb</span>
+                                <span class="file-desc">// Machine Learning assignments</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Games Folder -->
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">games/</span>
+                            <span class="folder-meta">2 items</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <div class="folder-content">
+
+                            <div class="file-item" onclick="openProject('angrybirds')">
+                                <span class="file-icon">🎮</span>
+                                <span class="file-name">AngryBirds</span>
+                                <span class="file-ext">.java</span>
+                                <span class="file-desc">// Angry Birds clone for college</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('connect4')">
+                                <span class="file-icon">🎮</span>
+                                <span class="file-name">Connect4</span>
+                                <span class="file-ext">.py</span>
+                                <span class="file-desc">// Classic Connect 4 game</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Tools Folder -->
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">tools/</span>
+                            <span class="folder-meta">3 items</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <div class="folder-content">
+
+                            <div class="file-item" onclick="openProject('byteme')">
+                                <span class="file-icon">🍔</span>
+                                <span class="file-name">ByteMe</span>
+                                <span class="file-ext">.java</span>
+                                <span class="file-desc">// Food ordering system</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('game-links-bot')">
+                                <span class="file-icon">🤖</span>
+                                <span class="file-name">GameLinksBot</span>
+                                <span class="file-ext">.py</span>
+                                <span class="file-desc">// Discord bot (deprecated) ★2</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('rl-scheduler')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">RL-Scheduler</span>
+                                <span class="file-ext">.c</span>
+                                <span class="file-desc">// RL job queue scheduler</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Coursework Folder -->
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">coursework/</span>
+                            <span class="folder-meta">3 items</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <div class="folder-content">
+
+                            <div class="file-item" onclick="openProject('cse102')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">CSE102-DSA</span>
+                                <span class="file-ext">.cpp</span>
+                                <span class="file-desc">// DSA assignments & labs</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('cse655')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">CSE655-NetworkSci</span>
+                                <span class="file-ext">.ipynb</span>
+                                <span class="file-desc">// Network Science projects</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('co-project')">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">CO-Project</span>
+                                <span class="file-ext">.py</span>
+                                <span class="file-desc">// Computer Organization group project</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- System Folder -->
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">system/</span>
+                            <span class="folder-meta">2 items</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <div class="folder-content">
+
+                            <div class="file-item" onclick="openProject('simpleshell')">
+                                <span class="file-icon">🐚</span>
+                                <span class="file-name">SimpleShell</span>
+                                <span class="file-ext">.c</span>
+                                <span class="file-desc">// Custom shell implementation</span>
+                            </div>
+
+                            <div class="file-item" onclick="openProject('simpleloader')">
+                                <span class="file-icon">⚙️</span>
+                                <span class="file-name">SimpleLoader</span>
+                                <span class="file-ext">.c</span>
+                                <span class="file-desc">// OS loader assignment</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Detail Modal -->
+        <div id="project-modal" class="project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title" id="modal-title">project.exe</span>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Content injected by JS -->
+                </div>
+                <div class="modal-footer">
+                    <span id="modal-links"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="terminal-section">
+            <div class="section-header">
+                <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~/portfolio</span><span class="dollar">$</span> cat contact.md
+            </div>
+            <div class="section-content contact-content">
+                <div class="contact-grid">
+                    <a href="https://github.com/Rishabh4Jakhar" target="_blank" class="contact-card">
+                        <span class="contact-icon">🐙</span>
+                        <span class="contact-label">GitHub</span>
+                        <span class="contact-value">Rishabh4Jakhar</span>
+                    </a>
+                    <a href="mailto:rishabhjakhar04@gmail.com" class="contact-card">
+                        <span class="contact-icon">📧</span>
+                        <span class="contact-label">Email</span>
+                        <span class="contact-value">rishabhjakhar04@gmail.com</span>
+                    </a>
+                    <div class="contact-card" onclick="copyToClipboard('ria.4')">
+                        <span class="contact-icon">💬</span>
+                        <span class="contact-label">Discord</span>
+                        <span class="contact-value" id="discord-val">ria.4</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="terminal-footer">
+            <div class="footer-prompt">
+                <span class="user">rishabh</span><span class="at">@</span><span class="host">jakhar</span><span class="colon">:</span><span class="path">~</span><span class="dollar">$</span> 
+                <span class="footer-text">Made with KIMI AI for testing · 46 repos and counting · <span class="blink">_</span></span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
